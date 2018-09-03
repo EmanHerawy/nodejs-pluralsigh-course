@@ -17,8 +17,12 @@ app.use('/js', express.static(path.join('./node_modules/bootstrap/dist/js/')))
 app.use('/js', express.static(path.join('./node_modules/jquery/dist/')))
 // app.use(morgan('combined'))
 app.use(morgan('tiny')) // less information 
-app.set('views', './src/views/');
-app.set('view engine', 'pug');
+// to render pug files
+// app.set('views', './src/pug-views/');
+// to render ejs files 
+app.set('views', './src/ejs-views/');
+// app.set('view engine', 'pug');
+app.set('view engine', 'ejs');
 app.get('/', (erq, res) => {
     // res.send('hello from express test page')
     //  res.sendFile(path.join(__dirname, 'views', 'index.html'))
@@ -27,7 +31,8 @@ app.get('/', (erq, res) => {
     // res.render('index')
     // to send some data 
     res.render('index', {
-        list: ['a', 'b']
+        list: ['a', 'b'],
+        title: 'My First App'
     })
 })
 
