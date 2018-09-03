@@ -10,6 +10,7 @@ const path = require('path')
 
 const port = process.env.PORT || 3000
 const app = new express();
+const bookRouter = express.Router();
 // to serve static files
 app.use(express.static(path.join('public')))
 app.use('/css', express.static(path.join('./node_modules/bootstrap/dist/css/')))
@@ -23,7 +24,15 @@ app.use(morgan('tiny')) // less information
 app.set('views', './src/ejs-views/');
 // app.set('view engine', 'pug');
 app.set('view engine', 'ejs');
-app.get('/', (erq, res) => {
+bookRouter.route('/').get((req, res) => {
+    res.send(' hello my books')
+})
+bookRouter.route('/single').get((req, res) => {
+    res.send(' hello my single books')
+})
+app.use('/books', bookRouter)
+
+app.get('/', (req, res) => {
     // res.send('hello from express test page')
     //  res.sendFile(path.join(__dirname, 'views', 'index.html'))
     // use pug template engine
@@ -31,7 +40,15 @@ app.get('/', (erq, res) => {
     // res.render('index')
     // to send some data 
     res.render('index', {
-        list: ['a', 'b'],
+        nav: [{
+                "link": "/books",
+                "title": "Books"
+            },
+            {
+                "link": "/authers",
+                "title": "Authers"
+            }
+        ],
         title: 'My First App'
     })
 })
