@@ -22,6 +22,7 @@ const nav = [{
     }
 ]
 const bookRouter = require('./src/routes/book-route')(nav)
+const adminRouter = require('./src/routes/admin-route')(nav)
 // to serve static files
 app.use(express.static(path.join('public')))
 app.use('/css', express.static(path.join('./node_modules/bootstrap/dist/css/')))
@@ -37,6 +38,7 @@ app.set('views', './src/ejs-views/');
 app.set('view engine', 'ejs');
 
 app.use('/books', bookRouter)
+app.use('/admin', adminRouter)
 
 app.get('/', (req, res) => {
     // res.send('hello from express test page')
