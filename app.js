@@ -10,7 +10,18 @@ const path = require('path')
 
 const port = process.env.PORT || 3000
 const app = new express();
-const bookRouter = express.Router();
+
+
+const nav = [{
+        "link": "/books",
+        "title": "Books"
+    },
+    {
+        "link": "/authers",
+        "title": "Authers"
+    }
+]
+const bookRouter = require('./src/routes/book-route')(nav)
 // to serve static files
 app.use(express.static(path.join('public')))
 app.use('/css', express.static(path.join('./node_modules/bootstrap/dist/css/')))
@@ -24,12 +35,7 @@ app.use(morgan('tiny')) // less information
 app.set('views', './src/ejs-views/');
 // app.set('view engine', 'pug');
 app.set('view engine', 'ejs');
-bookRouter.route('/').get((req, res) => {
-    res.send(' hello my books')
-})
-bookRouter.route('/single').get((req, res) => {
-    res.send(' hello my single books')
-})
+
 app.use('/books', bookRouter)
 
 app.get('/', (req, res) => {
@@ -40,16 +46,8 @@ app.get('/', (req, res) => {
     // res.render('index')
     // to send some data 
     res.render('index', {
-        nav: [{
-                "link": "/books",
-                "title": "Books"
-            },
-            {
-                "link": "/authers",
-                "title": "Authers"
-            }
-        ],
-        title: 'My First App'
+        nav,
+        title: 'Library'
     })
 })
 
