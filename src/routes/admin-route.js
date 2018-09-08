@@ -10,12 +10,14 @@ function route(nav) {
             title: 'War and Peace',
             genre: 'Historical Fiction',
             author: 'Lev Nikolayevich Tolstoy',
+            bookId: 656,
             read: false
         },
         {
             title: 'Les Misérables',
             genre: 'Historical Fiction',
             author: 'Victor Hugo',
+            bookId: 24280,
             read: false
         },
         {
@@ -55,9 +57,13 @@ function route(nav) {
             read: false
         }
     ];
-    adminRouter.route('/').get((req, res) => {
 
-        res.json(mongoInsert(books));
+
+    adminRouter.route('/').get((req, res) => {
+        mongoInsert(books).then(s => {
+            res.json(s.ops);
+
+        })
     })
 
     return adminRouter;
